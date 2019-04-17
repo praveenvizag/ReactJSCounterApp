@@ -8,25 +8,29 @@ class Counter extends Component {
       fontSize: 20,
       fontWeight: "Italic"
     },
-    tags:['tag1','tag2','tag3']
+    //tags:['tag1','tag2','tag3']
+    tags: []
   };
   render() {
     return (
       <React.Fragment>
-        <span className={this.getBadgeClasses()}>
-          {this.formatCount()}
-        </span>
+        <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <span />
-        <button className="btn btn-secondary btn-sm">Increment</button>
-        <ul>
-         {this.state.tags.map(tag=><li key={tag}>tag</li>)}
-        </ul>
+        <button
+          onClick={() =>
+            this.handleIncrement({id:1})
+          }
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
+        <ul>{this.renderTags()}</ul>
       </React.Fragment>
     );
   }
   formatCount() {
     const { count } = this.state;
-    return count === 0 ? <h1 style = {this.state.styles}>Zero</h1> : count;
+    return count === 0 ? <h1 style={this.state.styles}>Zero</h1> : count;
   }
 
   getBadgeClasses() {
@@ -35,6 +39,17 @@ class Counter extends Component {
     console.log(classes);
     return classes;
   }
+
+  renderTags() {
+    if (this.state.tags.length === 0) return <p>There are no tags to render</p>;
+    return this.state.tags.map(tag => <li key={tag}>tag</li>);
+  }
+  handleIncrement = product => {
+    console.log(product);
+    this.setState({
+      state: this.state.count++
+    });
+  };
 }
 
 export default Counter;
